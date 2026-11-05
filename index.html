@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10243d">
+<title>Quality Quest — Операция: качество</title>
+<style>
+:root{--navy:#55595a;--navy2:#666a6b;--blue:#ef741b;--cyan:#f28a32;--gold:#ef741b;--ink:#172638;--muted:#607086;--paper:#f4f7fb;--line:#dce5ef;--good:#16835d;--bad:#c24b4b;--shadow:0 18px 55px rgba(16,36,61,.15)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 8% 0%,#fff0e4 0,transparent 34%),linear-gradient(135deg,#f5f5f4,#fffaf6 65%,#eeeae7);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);min-height:100vh}
+button,input,textarea{font:inherit}button{cursor:pointer}.shell{max-width:1120px;margin:auto;padding:22px 18px 56px}.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#52677f;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.brand{display:flex;align-items:center;gap:9px}.brand-mark{height:31px;width:31px;border-radius:10px;background:linear-gradient(140deg,#ef741b,#f6a15e);display:grid;place-items:center;color:#09253c;font-weight:950;font-size:15px;box-shadow:0 7px 18px #2f80ed35}.privacy{border:1px solid #cfdae7;background:#ffffff9c;border-radius:99px;padding:7px 11px;letter-spacing:0;text-transform:none;font-weight:600}
+.hero{margin-top:18px;border-radius:28px;overflow:hidden;background:linear-gradient(115deg,#55595a 0%,#686b6b 62%,#d96616 100%);color:white;position:relative;box-shadow:var(--shadow);padding:34px clamp(22px,5vw,52px) 30px}.hero:before,.hero:after{content:"";position:absolute;border:1px solid #ffffff16;border-radius:50%;width:390px;height:390px;right:-110px;top:-230px}.hero:after{width:260px;height:260px;right:65px;top:-175px}.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#ffd0ae;font-weight:800}.hero h1{font-size:clamp(34px,6vw,62px);line-height:.98;letter-spacing:-.045em;margin:15px 0 12px;max-width:650px}.hero h1 span{color:var(--cyan)}.hero p{color:#cfdeeb;max-width:600px;line-height:1.6;margin:0;font-size:16px}.hero-bottom{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:26px;flex-wrap:wrap}.hero-tags{display:flex;flex-wrap:wrap;gap:8px}.tag{border:1px solid #ffffff30;background:#ffffff12;color:#e6f3fc;padding:7px 11px;border-radius:99px;font-size:12px}.btn{border:0;border-radius:13px;padding:12px 17px;font-weight:800;transition:.18s transform,.18s filter;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn:hover{transform:translateY(-1px);filter:brightness(1.04)}.btn:active{transform:translateY(0)}.btn-primary{background:linear-gradient(110deg,#ef741b,#f6a15e);color:#fff;box-shadow:0 8px 20px #54d6d044}.btn-dark{background:var(--navy);color:white}.btn-light{background:#eaf1f8;color:#24405d;border:1px solid var(--line)}.btn:disabled{opacity:.42;cursor:not-allowed;transform:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}.stat{background:#ffffffc9;border:1px solid #e0e8f1;border-radius:17px;padding:14px 16px;box-shadow:0 5px 18px #203c5c09}.stat small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}.stat strong{display:block;font-size:23px;margin-top:3px;letter-spacing:-.03em}.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:16px;align-items:start;margin-top:8px}.side,.panel{background:#fff;border:1px solid #e0e8f1;border-radius:21px;box-shadow:0 8px 26px #203c5c0a}.side{padding:14px;position:sticky;top:12px}.side h3{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#74859a;margin:5px 8px 11px}.step{width:100%;border:0;background:transparent;display:flex;align-items:center;text-align:left;gap:11px;padding:11px 9px;border-radius:13px;color:#52657b;margin:2px 0}.step:hover{background:#f3f7fb}.step.active{background:#fff0e4;color:#a8490d}.step.done .num{background:#dff5eb;color:#137750}.num{width:28px;height:28px;border-radius:9px;background:#eef3f8;display:grid;place-items:center;font-size:12px;font-weight:900;flex:none}.step.active .num{background:#ffd9bf;color:#a8490d}.step-label{font-size:13px;font-weight:800;line-height:1.2}.step-label small{display:block;font-size:11px;color:#8392a3;font-weight:600;margin-top:3px}.panel{padding:clamp(18px,3vw,30px);min-height:510px;animation:panelIn .28s ease both}
+@keyframes panelIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.step:focus-visible,.btn:focus-visible,.choice:focus-visible{outline:3px solid #ef741b;outline-offset:3px}.round-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.round-kicker{font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:900;color:#d96616}.time-pill{display:none}.panel h2{font-size:clamp(25px,4vw,35px);letter-spacing:-.04em;margin:11px 0 8px}.lead{color:#62748a;line-height:1.6;margin:0 0 21px}.casebox{border:1px solid #dce6f0;border-radius:16px;background:linear-gradient(140deg,#f8fbfe,#f2f7fb);padding:16px;margin:13px 0}.casebox h4{margin:0 0 9px;font-size:14px}.casebox p{margin:6px 0;color:#43566c;font-size:14px;line-height:1.5}.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.evidence{background:white;border:1px solid var(--line);border-radius:14px;padding:13px}.evidence b{font-size:12px;color:#5c7188;text-transform:uppercase;letter-spacing:.06em}.evidence p{font-size:13px;line-height:1.5;margin:7px 0 0;color:#253c54}.choice-list{display:grid;gap:9px;margin:15px 0}.choice{width:100%;display:flex;align-items:flex-start;gap:11px;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:13px;color:#24394f;line-height:1.45;transition:.15s}.choice:hover{border-color:#efad7c;background:#fffaf6}.choice.selected{border-color:#ef741b;background:#fff4ec;box-shadow:0 0 0 3px #21969a14}.choice.correct{border-color:#70c39e;background:#effaf4}.choice.wrong{border-color:#e4a1a1;background:#fff5f5}.radio-dot{width:19px;height:19px;border:1.5px solid #aab9c8;border-radius:50%;flex:none;margin-top:1px;display:grid;place-items:center}.choice.selected .radio-dot{border-color:#ef741b}.choice.selected .radio-dot:after{content:"";height:9px;width:9px;border-radius:50%;background:#ef741b}.checkrow{display:flex;gap:8px;align-items:flex-start;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;margin:8px 0;cursor:pointer}.checkrow input{accent-color:#168c91;margin:3px 0 0}.checkrow span{font-size:13px;line-height:1.4}.feedback{padding:13px 15px;border-radius:13px;margin:14px 0;font-size:13px;line-height:1.5}.feedback.good{background:#eaf8f0;border:1px solid #b9e5cc;color:#176342}.feedback.bad{background:#fff3ed;border:1px solid #f0d0be;color:#884a30}.feedback.info{background:#edf5ff;border:1px solid #c8def6;color:#285477}.actionrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:19px}.progress{height:7px;background:#eaf0f6;border-radius:99px;overflow:hidden;margin:16px 0 0}.progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ef741b,#f6a15e);border-radius:99px;transition:width .3s}.input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px;outline:none;background:#fff;color:var(--ink)}.input:focus,textarea:focus{border-color:#ef741b;box-shadow:0 0 0 3px #54aeb21c}.idea{min-height:100px;resize:vertical}.meme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.meme{background:#fff;border:1.5px solid var(--line);border-radius:15px;padding:14px;text-align:left;min-height:150px;display:flex;flex-direction:column;justify-content:space-between}.meme .emoji{font-size:31px}.meme b{font-size:13px;line-height:1.35}.meme.selected{border-color:#21969a;background:#effafa}.meme small{color:#8190a1;font-size:11px;margin-top:10px}.boss{background:linear-gradient(120deg,#55595a,#777b7b);border-radius:17px;padding:19px;color:#fff;margin:15px 0}.boss .bossname{font-size:11px;letter-spacing:.15em;color:#ffbd8c;font-weight:900}.boss h3{font-size:24px;margin:7px 0}.boss p{font-size:13px;color:#cbd8e5;line-height:1.5;margin:0}.health{height:9px;border-radius:99px;background:#435570;margin-top:15px;overflow:hidden}.health span{height:100%;display:block;background:linear-gradient(90deg,#ef741b,#f6a15e);width:100%;transition:width .3s}.estimate-wrap{display:grid;grid-template-columns:1fr auto;gap:10px}.estimate-wrap .input{min-width:0}.result-hero{text-align:center;padding:25px 5px}.medal{width:88px;height:88px;border-radius:28px;margin:0 auto 16px;background:linear-gradient(135deg,#ffd1b0,#ef741b);display:grid;place-items:center;font-size:39px;box-shadow:0 12px 27px #ef741b35}.result-hero h2{font-size:37px}.score-big{font-size:54px;letter-spacing:-.06em;font-weight:950;color:#55595a}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}.result-cell{background:#f2f7fb;border:1px solid var(--line);border-radius:14px;padding:13px}.result-cell strong{font-size:22px;display:block}.result-cell small{color:#718197;font-size:11px}.footer-note{color:#8291a1;font-size:11px;line-height:1.5;margin-top:17px}.hidden{display:none!important}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#142e49;color:white;padding:11px 16px;border-radius:12px;box-shadow:var(--shadow);font-size:13px;z-index:5;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1}.leader-note{background:#f7f9fc;border:1px dashed #cbd7e4;padding:12px 14px;border-radius:12px;color:#6d7d90;font-size:12px;line-height:1.5}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.side{position:static;display:flex;overflow:auto;gap:5px;padding:8px}.side h3{display:none}.step{width:auto;min-width:52px;justify-content:center;padding:8px}.step-label{display:none}.num{width:32px;height:32px}.stats{gap:7px}.stat{padding:11px}.stat strong{font-size:19px}.hero{padding-top:27px}.evidence-grid{grid-template-columns:1fr}.meme-grid{grid-template-columns:1fr}.meme{min-height:110px;flex-direction:row;align-items:center;gap:12px}.meme small{display:none}.panel{min-height:460px}.result-grid{grid-template-columns:1fr 1fr}.privacy{font-size:10px}}
+@media(max-width:430px){.shell{padding:15px 11px 35px}.hero{border-radius:21px}.topline{font-size:11px}.privacy{display:none}.hero-bottom{align-items:flex-start}.hero-bottom .btn{width:100%}.stats{grid-template-columns:repeat(3,1fr)}.stat small{font-size:9px}.stat strong{font-size:17px}.panel{padding:17px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<div class="layout" id="gameLayout">
+    <aside class="side" aria-label="Этапы квеста">
+      <h3>Маршрут квеста</h3>
+      <button class="step active" data-step="0"><span class="num">01</span><span class="step-label">Дело № 9001<small>Найди несоответствия</small></span></button>
+      <button class="step" data-step="1"><span class="num">02</span><span class="step-label">Что будешь делать?<small>Прими решение</small></span></button>
+      <button class="step" data-step="2"><span class="num">03</span><span class="step-label">Босс-файт<small>Победи бюрократию</small></span></button>
+      <button class="step" data-step="3"><span class="num">04</span><span class="step-label">Квиз качества<small>Проверь знания</small></span></button>
+    </aside>
+    <main class="panel" id="panel" tabindex="-1" aria-live="polite">
+      <div class="round-top"><span class="round-kicker">Уровень 01 · Расследование</span></div>
+      <h2>Дело № 9001: пропавшее качество</h2>
+      <p class="lead">Важный отчёт почти готов к отправке. Но в материалах дела что-то не сходится. Найди <b>6 несоответствий</b> — отметь все подозрительные детали.</p>
+      <div class="evidence-grid">
+        <div class="evidence"><b>✉ Письмо от руководителя</b><p>«Отправить отчёт до <b>18 ноября</b>. Использовать версию <b>5</b>. Итоговая сумма — <b>128 000 ₽</b>. Перед отправкой нужно согласование руководителя закупок».</p></div>
+        <div class="evidence"><b>▤ Открытый файл отчёта</b><p>Название: «Отчёт о проверке поставщика»<br>Версия: <b>4</b><br>Дата документа: <b>19 ноября</b><br>Итоговая сумма: <b>182 000 ₽</b><br>Поле «Согласовано»: <b>пустое</b></p></div>
+      </div>
+      <div class="casebox"><h4>Какие детали требуют проверки?</h4><div id="detectiveChecks">
+        <label class="checkrow"><input type="checkbox" value="version"><span>В файле указана версия 4, хотя в письме запрошена версия 5.</span></label>
+        <label class="checkrow"><input type="checkbox" value="date"><span>Дата документа — 19 ноября, а срок из письма — 18 ноября.</span></label>
+        <label class="checkrow"><input type="checkbox" value="amount"><span>Сумма в файле — 182 000 ₽ вместо 128 000 ₽.</span></label>
+        <label class="checkrow"><input type="checkbox" value="approval"><span>В документе нет обязательного согласования.</span></label>
+        <label class="checkrow"><input type="checkbox" value="font"><span>В документе используется шрифт Arial, а не Calibri.</span></label>
+        <label class="checkrow"><input type="checkbox" value="logo"><span>В письме не указано, какого цвета должна быть обложка.</span></label>
+      </div></div>
+      <div id="detectiveFeedback"></div>
+      <div class="actionrow"><button class="btn btn-dark" id="checkDetective">Проверить улики</button><button class="btn btn-light" id="resetDetective">Сбросить</button></div>
+      <div class="progress"><span id="progressBar" style="width:0%"></span></div>
+    </main>
+  </div>
+  
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const $=s=>document.querySelector(s);const $$=s=>Array.from(document.querySelectorAll(s));
+const freshState=()=>({step:0,done:[false,false,false,false],answers:{},bossIndex:0,decisionIndex:0});
+let state=freshState();
+try{const stored=localStorage.getItem('qualityQuestProgress_v5');if(stored){const parsed=JSON.parse(stored);if(parsed&&Array.isArray(parsed.done)&&parsed.answers)state={...freshState(),...parsed};}}catch(e){}
+function saveProgress(){try{localStorage.setItem('qualityQuestProgress_v5',JSON.stringify(state));}catch(e){}}
+state.step=Number.isInteger(state.step)&&state.step>=0&&state.step<=3?state.step:0;state.bossIndex=Number.isInteger(state.bossIndex)&&state.bossIndex>=0&&state.bossIndex<6?state.bossIndex:0;state.decisionIndex=Number.isInteger(state.decisionIndex)&&state.decisionIndex>=0&&state.decisionIndex<3?state.decisionIndex:0;state.answers=state.answers&&typeof state.answers==='object'?state.answers:{};state.done=Array.isArray(state.done)&&state.done.length===4?state.done:[false,false,false,false];
+
+function updateStats(){$$('.step').forEach((b,i)=>{b.classList.toggle('active',i===state.step);b.classList.toggle('done',state.done[i]);b.querySelector('.num').textContent=state.done[i]?'✓':String(i+1).padStart(2,'0')})}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2100)}
+function finishStep(i){state.done[i]=true;saveProgress();updateStats()}
+function nav(i){state.step=i;saveProgress();render();updateStats();$('#panel').focus({preventScroll:true});if(window.innerWidth<760)$('#panel').scrollIntoView({behavior:'smooth',block:'start'})}
+$$('.step').forEach(b=>b.addEventListener('click',()=>nav(Number(b.dataset.step))));$('#resetGame')?.addEventListener('click',()=>{if(confirm('Сбросить весь прогресс и начать квест заново?')){state=freshState();saveProgress();nav(0);toast('Прогресс сброшен')}});$('#startBtn')?.addEventListener('click',()=>{nav(0);$('#gameLayout')?.scrollIntoView({behavior:'smooth',block:'start'})});
+function shell(kicker,title,lead,body){return `<div class="round-top"><span class="round-kicker">${kicker}</span></div><h2>${title}</h2><p class="lead">${lead}</p>${body}`}
+function render(){saveProgress();const p=$('#panel');if(state.step===0){renderDetective(p)}if(state.step===1){renderDecision(p)}if(state.step===2){renderBoss(p)}if(state.step===3){renderQuiz(p)}updateStats()}
+function renderDetective(p){
+const findings=[
+['version','В письме запрошена версия 7, а в карточке документа указана версия 6.'],
+['date','Срок отправки — 18 ноября, но в отчёте дата формирования стоит 19 ноября.'],
+['sum','В письме подтверждена сумма 128 400 ₽, а в сводной таблице указано 182 400 ₽.'],
+['approval','В маршруте согласования отсутствует обязательное согласование финансового контролёра.'],
+['source','В таблице источник данных указан как «по информации коллеги», без ссылки на первичную запись.'],
+['owner','В карточке процесса не назначен владелец итоговой проверки.'],
+['attachment','В письме требуется приложить расчёт, но в перечне вложений его нет.'],
+['period','В заголовке отчёта указан октябрь, а в таблице показателей — сентябрь.'],
+['formula','Итоговая строка таблицы не включает последнюю позицию расходов.'],
+['distribution','В списке рассылки указан бывший сотрудник, которому больше не требуется доступ.'],
+['font','В одном абзаце используется другой шрифт.'],
+['cover','Цвет обложки отличается от предпочтительного цвета автора.'],
+['filename','Имя файла длиннее обычного и содержит подчёркивания.'],
+['logo','Логотип в черновике немного смещён относительно центра.'],
+['greeting','В письме использовано неформальное приветствие.']
+];
+const correct=['version','date','sum','approval','source','owner','attachment','period','formula','distribution'];
+const solved=!!state.answers.detectiveSolved;
+const previouslyChecked=!!state.answers.detectiveChecked;
+const selected=Array.isArray(state.answers.detectiveSelected)?state.answers.detectiveSelected:[];
+p.innerHTML=shell('РАССЛЕДОВАНИЕ · ДОСЬЕ 9001','Дело № 9001: отчёт с подвохом','Изучи материалы и отметь только те факты, которые действительно указывают на риск или несоответствие требованиям. Здесь 10 существенных проблем и 5 отвлекающих деталей.',`
+<div class="casebox"><h4>Материал 1 · Письмо заказчика процесса</h4><p>«Подготовить итоговый отчёт за <b>октябрь</b> и направить до <b>18 ноября</b>. Использовать утверждённый шаблон версии <b>7</b>. Подтверждённая сумма расходов — <b>128 400 ₽</b>. К отчёту приложить расчёт. Перед отправкой получить согласование руководителя подразделения и финансового контролёра».</p></div>
+<div class="evidence-grid">
+<div class="evidence"><b>Материал 2 · Карточка документа</b><p>Файл: <b>Отчёт_октябрь_v6.docx</b><br>Версия в карточке: <b>6</b><br>Дата формирования: <b>19 ноября</b><br>Статус согласования: руководитель подразделения — согласовано; финансовый контролёр — не указан.</p></div>
+<div class="evidence"><b>Материал 3 · Сводная таблица</b><p>Период в заголовке: <b>сентябрь</b><br>Сумма расходов: <b>182 400 ₽</b><br>Источник данных: <b>«по информации коллеги»</b><br>Последняя строка расходов визуально присутствует, но формула итога её не охватывает.</p></div>
+<div class="evidence"><b>Материал 4 · Карточка процесса</b><p>Владелец процесса: <b>не назначен</b><br>Итоговая проверка: <b>не определён ответственный</b><br>Вложения к письму: <b>смета отсутствует</b></p></div>
+<div class="evidence"><b>Материал 5 · Список рассылки</b><p>В копии письма указан сотрудник, который <b>переведён в другую компанию</b> и больше не участвует в процессе. Доступ к материалам ему не требуется.</p></div>
+</div>
+<div class="casebox"><h4>Какие детали требуют проверки?</h4><p>Выбери все существенные несоответствия. После проверки можно исправить выбор и пройти проверку повторно.</p>
+<div id="detectiveChecks">${findings.map(([v,t])=>`<label class="checkrow"><input type="checkbox" value="${v}" ${selected.includes(v)?'checked':''} ${solved?'disabled':''}><span>${t}</span></label>`).join('')}</div></div>
+<div id="detectiveFeedback">${state.answers.detectiveFeedback||''}</div>
+<div class="actionrow"><button type="button" class="btn btn-dark" id="checkDetective" ${solved?'disabled':''}>${previouslyChecked&&!solved?'Проверить ещё раз':'Проверить улики'}</button><button type="button" class="btn btn-light" id="resetDetective" ${solved?'disabled':''}>Сбросить выбор</button>${solved?'<button type="button" class="btn btn-primary" id="next">Перейти к ситуациям →</button>':''}</div>`);
+const checks=$$('#detectiveChecks input');
+checks.forEach(input=>input.addEventListener('change',()=>{
+ state.answers.detectiveSelected=checks.filter(x=>x.checked).map(x=>x.value);
+ saveProgress();
+}));
+$('#checkDetective')?.addEventListener('click',()=>{
+ const chosen=checks.filter(x=>x.checked).map(x=>x.value);
+ if(chosen.length===0){toast('Сначала отметь найденные несоответствия');return;}
+ const hits=chosen.filter(x=>correct.includes(x)).length;
+ const misses=correct.filter(x=>!chosen.includes(x));
+ const falseHits=chosen.filter(x=>!correct.includes(x));
+ const exact=misses.length===0&&falseHits.length===0;
+ state.answers.detectiveSelected=chosen;
+ state.answers.detectiveChecked=true;
+ state.answers.detectiveSolved=exact;
+ state.answers.perfectDetective=exact;
+ state.answers.detectiveFeedback=`<div class="feedback ${exact?'good':'info'}"><b>${exact?'Расследование завершено: все 10 несоответствий найдены!':'Проверка не пройдена — можно исправить выбор и попробовать ещё раз.'}</b><br>Правильно найдено: ${hits} из ${correct.length}. Пропущено: ${misses.length}. Лишних отметок: ${falseHits.length}.${exact?'<br><br><b>Отличная работа!</b> Ты отделил реальные риски от косметических особенностей.':'<br><br><b>Подсказка:</b> ищи противоречия требованиям, недостоверные данные, отсутствие обязательного контроля, прослеживаемости или защиты информации.'}</div>`;
+ if(exact)finishStep(0); else saveProgress();
+ renderDetective($('#panel'));updateStats();
+});
+$('#resetDetective')?.addEventListener('click',()=>{
+ state.answers.detectiveSelected=[];state.answers.detectiveChecked=false;state.answers.detectiveFeedback='';saveProgress();renderDetective($('#panel'));
+});
+$('#next')?.addEventListener('click',()=>nav(1));
+}
+const decisionCases=[
+{title:'Отчёт с расхождением',desc:'Руководитель ждёт отчёт. В файле сумма отличается от первичных данных, а коллега, подготовивший документ, пока не отвечает.',question:'Как поступить?',options:[['a','Исправить сумму самостоятельно по памяти и сразу отправить документ.'],['b','Отправить текущую версию, а несоответствие объяснить позже.'],['c','Приостановить отправку, сверить данные с источником, связаться с ответственным и получить согласование.'],['d','Удалить файл и попросить коллегу подготовить всё заново, не разбираясь в причине.']],right:'c',why:'Нужно остановить распространение потенциально неверной информации, проверить первоисточник и пройти предусмотренное согласование.'},
+{title:'Клиент изменил требования',desc:'После начала работы клиент прислал новую редакцию требований. Часть команды продолжает использовать предыдущую версию, потому что не все увидели письмо.',question:'Какое действие наиболее надёжное?',options:[['a','Разослать новое письмо и надеяться, что все его прочитают.'],['b','Зафиксировать изменение, определить затронутые документы и задачи, уведомить участников и убедиться, что они используют актуальную версию.'],['c','Продолжать работу по старой версии, чтобы не задерживать сроки.'],['d','Удалить все старые документы без сохранения истории.']],right:'b',why:'Изменения требований нужно контролируемо анализировать, доводить до заинтересованных участников и отслеживать актуальность информации.'},
+{title:'Одна ошибка повторяется',desc:'В ежемесячном отчёте снова обнаружена одна и та же ошибка. Её исправляют вручную, но причина пока неизвестна.',question:'Что лучше сделать дальше?',options:[['a','Ограничиться ещё одной проверкой перед отправкой.'],['b','Попросить всех быть внимательнее.'],['c','Найти первопричину, определить корректирующее действие, назначить ответственного и проверить результативность.'],['d','Скрыть ошибку из отчёта, чтобы не портить показатели.']],right:'c',why:'Повторяемость указывает, что простого исправления недостаточно. Нужно понять причину и проверить, что принятое действие действительно предотвратило повторение.'}
+];
+function renderDecision(p){
+const i=Number.isInteger(state.decisionIndex)&&state.decisionIndex>=0&&state.decisionIndex<decisionCases.length?state.decisionIndex:0;state.decisionIndex=i;const item=decisionCases[i];const saved=state.answers.decisionChoices||{};const submitted=saved[i]!==undefined;
+p.innerHTML=shell(`Уровень 02 · Ситуационный тренажёр · ${i+1}/${decisionCases.length}`,'Решение за тобой','Три короткие рабочие ситуации. Выбери действие, которое помогает сохранить качество результата и управляемость процесса.',`
+<div class="casebox"><div class="round-kicker">Ситуация ${i+1} из ${decisionCases.length}</div><h3 style="margin:8px 0">${item.title}</h3><p>${item.desc}</p><h4 style="margin-top:14px">${item.question}</h4></div>
+<div class="choice-list" id="decisionChoices">${item.options.map(([v,t])=>`<button class="choice" data-choice="${v}" ${submitted?'disabled':''}><span class="radio-dot"></span><span>${t}</span></button>`).join('')}</div>
+<div id="decisionFeedback">${state.answers['decisionFeedback'+i]||''}</div>
+<div class="actionrow"><button class="btn btn-dark" id="submitDecision" ${submitted?'disabled':''}>Подтвердить решение</button>${submitted?`<button class="btn btn-primary" id="decisionNext">${i===decisionCases.length-1?'К босс-файту →':'Следующая ситуация →'}</button>`:''}</div>
+<div class="progress"><span style="width:${Object.keys(saved).length/decisionCases.length*100}%"></span></div>`);
+let selected=saved[i];$$('#decisionChoices .choice').forEach(b=>{if(b.dataset.choice===selected)b.classList.add('selected');b.addEventListener('click',()=>{if(submitted)return;selected=b.dataset.choice;$$('#decisionChoices .choice').forEach(x=>x.classList.toggle('selected',x===b))})});
+$('#submitDecision')?.addEventListener('click',()=>{if(!selected){toast('Сначала выбери вариант');return}state.answers.decisionChoices=state.answers.decisionChoices||{};state.answers.decisionChoices[i]=selected;const good=selected===item.right;state.answers['decisionFeedback'+i]=`<div class="feedback ${good?'good':'info'}"><b>${good?'Хорошее решение!':'Есть более надёжный вариант.'}</b><br>${item.why}</div>`;if(i===decisionCases.length-1)finishStep(1);saveProgress();renderDecision($('#panel'))});
+$('#decisionNext')?.addEventListener('click',()=>{if(i<decisionCases.length-1){state.decisionIndex=i+1;saveProgress();renderDecision($('#panel'))}else{state.decisionIndex=0;nav(2)}});
+}
+const bossRounds=[
+{attack:'Версии документа разошлись',desc:'В общем каталоге лежат три файла. В одном — последние цифры, во втором — согласованные формулировки, в третьем — подпись руководителя. Срок отправки сегодня. Коллега предлагает «быстро склеить» их вручную.',tools:[['a','Взять файл с самой поздней датой изменения и отправить без дополнительной проверки.'],['b','Сопоставить историю изменений и подтверждения, определить утверждённую версию, затем внести согласованные правки контролируемым способом и повторно проверить документ.'],['c','Объединить все три файла, оставив все варианты текста на случай вопросов.'],['d','Попросить руководителя выбрать файл на глаз — он лучше знает содержание.'],['e','Создать новый файл с номером версии 4 и считать его актуальным.']],right:'b',why:'Дата изменения сама по себе не подтверждает актуальность. Нужно проверить статус утверждения, историю изменений и согласованные данные, а затем обеспечить идентификацию единственной действующей версии.'},
+{attack:'Согласование застряло',desc:'Процесс обычно занимает два дня, но сейчас документ 9 дней находится у трёх согласующих. Один проверяет содержание, второй — бюджет, третий не понимает, что именно от него требуется. Владелец процесса не определён.',tools:[['a','Установить всем одинаковый срок в один час и отправить повторное письмо.'],['b','Убрать третьего согласующего без выяснения, зачем он включён в маршрут.'],['c','Разобрать маршрут: определить обязательность каждого согласования, критерии проверки, ответственных, последовательность и эскалацию просрочки; затем проверить процесс на следующем цикле.'],['d','Передать все решения одному самому быстрому сотруднику.'],['e','Добавить напоминания каждый час, не меняя сам маршрут.']],right:'c',why:'Проблема не только в задержке, но и в неясных ролях и критериях. Сначала нужно понять ценность и назначение каждого этапа, назначить владельца и установить управляемый маршрут.'},
+{attack:'Несоответствие повторяется',desc:'За квартал трижды обнаружили одинаковую ошибку в заявках. Каждый раз заявку исправляли и отправляли сотрудникам напоминание. В последнем случае выяснилось, что обязательное поле не отображается в мобильной версии формы.',tools:[['a','Провести повторное обучение всех сотрудников и закрыть вопрос.'],['b','Ввести стопроцентную проверку заявок вручную на постоянной основе.'],['c','Исправить только три уже обнаруженные заявки и не менять форму.'],['d','Зафиксировать несоответствие, оценить затронутые заявки, исследовать причину, изменить форму и проверить результативность изменения на выборке после внедрения.'],['e','Назначить виновного за каждую ошибочную заявку.']],right:'d',why:'Есть свидетельство системной причины — поле не отображается в мобильной версии. Нужно устранить причину, оценить последствия для уже обработанных заявок и подтвердить, что изменение действительно предотвращает повторение.'},
+{attack:'Показатель стал зелёным',desc:'KPI по срокам улучшился с 82% до 98%. Одновременно сотрудники сообщают, что незавершённые заявки стали закрывать в системе с последующим открытием заново. Методика расчёта не пересматривалась.',tools:[['a','Поздравить команду и закрепить практику как успешную.'],['b','Сменить целевое значение KPI, чтобы рост выглядел менее резким.'],['c','Проверить определение показателя, первичные записи, правила закрытия и повторного открытия; сопоставить метрику с реальным результатом процесса и при необходимости скорректировать методику.'],['d','Удалить из расчёта все заявки, которые открывались повторно.'],['e','Считать сообщения сотрудников субъективными и не учитывать их.']],right:'c',why:'Показатель может улучшиться из-за изменения поведения при измерении, а не из-за улучшения процесса. Нужно проверить валидность данных и то, отражает ли KPI требуемый результат.'},
+{attack:'Изменение требований клиента',desc:'Клиент прислал новое требование по отчётности. Менеджер переслал письмо исполнителю, но шаблон, инструкция и критерии приёмки остались прежними. Первый отчёт по новым требованиям уже подготовлен.',tools:[['a','Сначала проверить содержание и применимость нового требования, определить затронутые процессы и документы, согласовать изменения, довести их до исполнителей и проверить первый результат до отправки.'],['b','Отправить отчёт как есть: менеджер уже переслал письмо.'],['c','Поменять шаблон самостоятельно, не уведомляя владельца процесса.'],['d','Сохранить новое требование только в переписке, чтобы не увеличивать количество документов.'],['e','Попросить клиента повторить требование в телефонном разговоре и не фиксировать его.']],right:'a',why:'Изменение требований нужно оценить, перевести в управляемые изменения процесса и документированной информации, довести до исполнителей и проверить результат до передачи клиенту.'},
+{attack:'Улучшение не прижилось',desc:'После изменения процесса время выполнения сократилось. Через месяц часть команды вернулась к старой схеме: новая инструкция неудобна, права доступа настроены не всем, а показатель скорости не учитывает количество возвратов на доработку.',tools:[['a','Выпустить приказ о запрете старого способа и считать внедрение завершённым.'],['b','Сохранить новую схему, но не менять доступы и обучение — сотрудники привыкнут.'],['c','Вернуть старый процесс, поскольку он привычнее.'],['d','Оценить причины отката, устранить барьеры внедрения, обучить пользователей, обновить доступы и критерии результата; затем проверить скорость вместе с качеством результата.'],['e','Оценивать улучшение только по средней скорости выполнения.']],right:'d',why:'Улучшение должно быть применимым и устойчивым. Нужно устранить причины возврата к старому процессу и оценивать не только скорость, но и качество результата, например возвраты и ошибки.'}
+];
+function renderBoss(p){const i=state.bossIndex;const r=bossRounds[i];const saved=state.answers.bossChoices||{};p.innerHTML=shell('Уровень 03 · Босс-файт','Победи бюрократию','У бюрократии ${bossRounds.length} атак. Подбирай правильный инструмент качества для каждой атаки.',`
+<div class="boss"><div class="bossname">ФИНАЛЬНЫЙ ПРОТИВНИК · УРОВЕНЬ ${i+1}/6</div><h3>👾 ${r.attack}</h3><p>${r.desc}</p><div class="health"><span style="width:${100-(state.answers.bossCorrect||0)/bossRounds.length*100}%"></span></div></div><div class="choice-list" id="bossChoices">${r.tools.map(([v,t])=>`<button class="choice" data-choice="${v}" ${saved[i]?'disabled':''}><span class="radio-dot"></span><span>${t}</span></button>`).join('')}</div><div id="bossFeedback">${state.answers['bossFeedback'+i]||''}</div><div class="actionrow"><button class="btn btn-dark" id="hitBoss" ${saved[i]?'disabled':''}>Нанести удар</button>${saved[i]?`<button class="btn btn-primary" id="bossNext">${i===bossRounds.length-1?'Завершить битву':'Следующая атака →'}</button>`:''}</div><p class="footer-note">Выбирай наиболее системное решение: учитывай факты, причины, последствия, ответственность и проверку результативности.</p>`);
+let chosen=saved[i];$$('#bossChoices .choice').forEach(b=>{if(b.dataset.choice===chosen)b.classList.add('selected');b.addEventListener('click',()=>{if(saved[i])return;chosen=b.dataset.choice;$$('#bossChoices .choice').forEach(x=>x.classList.toggle('selected',x===b))})});$('#hitBoss')?.addEventListener('click',()=>{if(!chosen){toast('Выбери инструмент');return}state.answers.bossChoices=state.answers.bossChoices||{};state.answers.bossChoices[i]=chosen;const ok=chosen===r.right;if(ok){state.answers.bossCorrect=(state.answers.bossCorrect||0)+1}state.answers['bossFeedback'+i]=`<div class="feedback ${ok?'good':'bad'}"><b>${ok?'Отличный ход!':'Бюрократия пока устояла.'}</b><br>${r.why}</div>`;if(i===bossRounds.length-1){finishStep(2)}saveProgress();renderBoss($('#panel'));updateStats()});$('#bossNext')?.addEventListener('click',()=>{if(i<bossRounds.length-1){state.bossIndex++;saveProgress();renderBoss($('#panel'))}else{state.bossIndex=0;nav(3)}})}
+const quizQuestions=[
+{q:'Что является главным объектом внимания менеджмента качества?',a:['Только готовая продукция','Потребитель, требования и процессы, создающие результат','Только документы СМК'],right:1,why:'Менеджмент качества охватывает процессы и способность стабильно выполнять требования потребителей и других заинтересованных сторон.'},
+{q:'Что означает цикл PDCA?',a:['Планируй — Делай — Проверяй — Действуй','Производи — Доставляй — Контролируй — Анализируй','Проверяй — Документируй — Согласовывай — Архивируй'],right:0,why:'PDCA — цикл постоянного улучшения: Plan, Do, Check, Act.'},
+{q:'Для чего нужно корректирующее действие?',a:['Чтобы исправить формулировку в отчёте','Чтобы устранить причину несоответствия и предупредить повторение','Чтобы назначить виновного'],right:1,why:'Исправление устраняет обнаруженную проблему, а корректирующее действие работает с её причиной.'},
+{q:'Что лучше всего описывает принцип 5S?',a:['Пять этапов согласования документов','Системная организация и поддержание рабочего пространства','Пять обязательных проверок в день'],right:1,why:'5S помогает организовать пространство, снизить потери и сделать отклонения заметными.'},
+{q:'Кто отвечает за качество в компании?',a:['Только отдел менеджмента качества','Только руководители подразделений','Каждый сотрудник в рамках своей роли и процессов'],right:2,why:'Отдел качества помогает выстраивать систему, но качество создаётся всеми участниками процессов.'},
+{q:'Что следует сделать, если обнаружена ошибка в документе?',a:['Скрыть её, если срок уже близко','Проверить данные, сообщить ответственным, исправить контролируемым способом и оценить риск','Создать новую копию и не трогать старую'],right:1,why:'Важно управлять несоответствием: не допустить непреднамеренного использования неверной информации и сохранить прослеживаемость.'},
+{q:'Как понять, что улучшение действительно сработало?',a:['По тому, что всем понравилась идея','По наличию приказа о внедрении','По проверенным данным и достижению ожидаемого результата'],right:2,why:'Результативность улучшения проверяют по фактам и показателям, а не только по факту внедрения.'},
+{q:'Что такое риск в контексте процессов?',a:['Влияние неопределённости на достижение результата','Любая жалоба клиента','Только финансовый ущерб'],right:0,why:'Риск связан с влиянием неопределённости на достижение целей; важно оценивать возможные последствия и принимать меры.'},
+{q:'Что следует сделать с устаревшей версией рабочей инструкции?',a:['Оставить рядом с актуальной без обозначений','Идентифицировать и предотвратить её непреднамеренное использование, сохранив историю при необходимости','Удалить все следы изменений'],right:1,why:'Управление документированной информацией помогает сотрудникам использовать актуальные данные и сохранять необходимую прослеживаемость.'},
+{q:'Какой пример лучше всего отражает процессный подход?',a:['Каждый отдел оптимизирует только собственные задачи','Работа рассматривается как связанные этапы с входами, выходами, ответственными и критериями результата','Главное — увеличить количество отчётов'],right:1,why:'Процессный подход рассматривает взаимосвязанные действия как систему, которая преобразует входы в запланированные результаты.'},
+{q:'Что означает объективное свидетельство при проверке?',a:['Личное впечатление проверяющего','Подтверждаемые данные, записи, наблюдения или факты','Устное мнение без подтверждения'],right:1,why:'Выводы должны опираться на проверяемые свидетельства, а не на предположения.'},
+{q:'Что важно сделать после внедрения изменения в процесс?',a:['Считать работу завершённой сразу после объявления','Проверить, достигнут ли ожидаемый результат, и при необходимости скорректировать действия','Не возвращаться к теме'],right:1,why:'Проверка результата замыкает цикл улучшения и показывает, принесло ли изменение ожидаемый эффект.'},
+{q:'В отчёте обнаружено расхождение с первичными данными, но срок отправки близко. Какой первый шаг наиболее обоснован?',a:['Отправить отчёт и исправить после замечания','Приостановить выпуск спорной версии, проверить источник данных и оценить влияние расхождения','Изменить цифру на наиболее вероятную'],right:1,why:'Нельзя выдавать неподтверждённые данные за достоверные. Сначала нужно проверить источник и оценить влияние на результат.'},
+{q:'Внутренний аудит выявил, что обязательная запись отсутствует в нескольких случаях. Что является корректным выводом?',a:['Сразу признать виновным конкретного сотрудника','Зафиксировать свидетельства, определить масштаб и исследовать причины несоблюдения установленного порядка','Считать проблему несущественной, если клиент не пожаловался'],right:1,why:'Вывод аудита должен опираться на свидетельства. Далее важно оценить масштаб, причины и необходимые действия.'},
+{q:'Два подразделения считают, что другое подразделение должно проверить результат перед передачей клиенту. Какой системный пробел вероятнее всего нужно устранить?',a:['Недостаточно строгий дресс-код','Неопределённость ролей, ответственности и критериев передачи результата','Слишком короткое название процесса'],right:1,why:'На стыках процессов должны быть определены роли, входы, выходы и критерии приёмки.'}
+];
+const questionsForResult=quizQuestions.map(q=>q.right);
+function renderQuiz(p){
+const questions=quizQuestions;
+state.answers.quiz=state.answers.quiz||{};
+let idx=Number.isInteger(state.answers.quizIndex)?state.answers.quizIndex:0;
+if(idx<0||idx>=questions.length)idx=0;
+state.answers.quizIndex=idx;
+const q=questions[idx];
+const saved=state.answers.quiz;
+const answered=Object.prototype.hasOwnProperty.call(saved,idx);
+p.innerHTML=shell('ФИНАЛЬНЫЙ ЭТАП · ПРОВЕРКА ЗНАНИЙ','Квиз качества','Вопросы построены на рабочих ситуациях и принципах менеджмента качества. Выбери один наиболее обоснованный ответ.',`
+<div class="casebox"><b>Вопрос ${idx+1} из ${questions.length}</b><h3 style="margin:10px 0 4px">${q.q}</h3></div>
+<div class="choice-list" id="quizChoices">${q.a.map((t,i)=>`<button type="button" class="choice" data-answer="${i}" ${answered?'disabled':''}><span class="radio-dot"></span><span>${t}</span></button>`).join('')}</div>
+<div id="quizFeedback">${state.answers['quizFeedback'+idx]||''}</div>
+<div class="actionrow"><button type="button" class="btn btn-dark" id="quizSubmit" ${answered?'disabled':''}>Проверить ответ</button>${answered?`<button type="button" class="btn btn-primary" id="quizNext">${idx===questions.length-1?'Завершить квест':'Следующий вопрос →'}</button>`:''}</div>
+<div class="progress"><span style="width:${Object.keys(saved).length/questions.length*100}%"></span></div>`);
+let choice=answered?saved[idx]:null;
+const buttons=$$('#quizChoices .choice');
+buttons.forEach(b=>{
+ if(answered&&Number(b.dataset.answer)===choice)b.classList.add('selected');
+ b.addEventListener('click',()=>{
+  if(answered)return;
+  choice=Number(b.dataset.answer);
+  buttons.forEach(x=>x.classList.toggle('selected',x===b));
+ });
+});
+$('#quizSubmit')?.addEventListener('click',()=>{
+ if(choice===null||choice===undefined){toast('Сначала выбери один вариант ответа');return;}
+ if(Object.prototype.hasOwnProperty.call(state.answers.quiz,idx))return;
+ state.answers.quiz[idx]=choice;
+ const ok=choice===q.right;
+ state.answers['quizFeedback'+idx]=`<div class="feedback ${ok?'good':'info'}"><b>${ok?'Верно!':'Ответ не совсем точный.'}</b><br>${q.why}</div>`;
+ if(idx===questions.length-1)finishStep(3);
+ saveProgress();renderQuiz($('#panel'));updateStats();
+ });
+$('#quizNext')?.addEventListener('click',()=>{
+ if(idx<questions.length-1){state.answers.quizIndex=idx+1;saveProgress();renderQuiz($('#panel'));}
+ else{showResult();}
+ });
+}
+function showResult(){const p=$('#panel');const correct=Object.keys(state.answers.quiz||{}).filter(k=>state.answers.quiz[k]===questionsForResult[k]).length;const summary=`QUALITY QUEST — квест завершён\nДетектив: ${state.answers.perfectDetective?'все улики найдены':'расследование завершено'}\nПравильных ответов в викторине: ${correct} из ${quizQuestions.length}\n`;p.innerHTML=`<div class="result-hero"><div class="medal">✓</div><div class="round-kicker">Операция завершена</div><h2>Качество — это командная работа</h2><p class="lead">Ты прошёл все этапы QUALITY QUEST. Спасибо за участие!</p></div><div class="feedback good"><b>Главный вывод</b><br>Качество — это не только стандарты и проверки. Это понятные процессы, внимательность, своевременная коммуникация и предупреждение повторных ошибок.</div><div class="actionrow"><button class="btn btn-dark" id="copyResult">Скопировать итог</button><button class="btn btn-light" id="restart">Пройти заново</button></div>`;$('#copyResult').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(summary);toast('Итог скопирован')}catch(e){downloadText('quality-quest-result.txt',summary)}});$('#restart').addEventListener('click',()=>location.reload());updateStats()}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function downloadText(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
+render();
+</script>
+</body>
+</html>
