@@ -190,7 +190,7 @@ function renderDetective(p){
       <div id="detectiveFeedback">${feedback}</div>
       <div class="actionrow">${solved?`<button type="button" class="btn btn-primary" id="detectiveNext">${index===detectiveCases.length-1?'Перейти к ситуациям →':'Следующее досье →'}</button>`:`<button type="button" class="btn btn-dark" id="checkDetective">${checked?'Проверить ещё раз':'Проверить досье'}</button>`}</div>
       <div class="progress"><span style="width:${completed/detectiveCases.length*100}%"></span></div>
-      <p class="footer-note">Подсказка: ищи противоречия требованиям, недостоверные данные, отсутствие обязательного контроля и невозможность проследить результат.</p>`);
+      <p class="footer-note"></p>`);
   const checks=$$('#detectiveChecks input');
   checks.forEach(input=>input.addEventListener('change',()=>{
     const current=state.answers.detectiveSelectedByCase||{};
@@ -394,15 +394,15 @@ function renderCrossword(p){
   }
  }
  const makeClues=(dir)=>crosswordWords.filter(w=>w.dir===dir).map(w=>`<button type="button" class="cross-clue ${active===w.key?'active':''} ${solved[w.key]?'solved':''}" data-word="${w.key}"><span class="cross-clue-no">${w.number}</span><span class="cross-clue-text">${w.clue}</span><small>${w.answer.length} букв</small>${solved[w.key]?'<b class="cross-clue-check">✓</b>':''}</button>`).join('');
- p.innerHTML=shell('ДОПОЛНИТЕЛЬНОЕ ИСПЫТАНИЕ · 16 СЛОВ','Кроссворд по СМК','Разгадай слова по горизонтали и вертикали. Слова пересекаются: одна и та же буква подходит сразу к двум ответам. Нажми на определение, чтобы выделить нужное слово.',`
- <div class="crossword-topline"><span><b>Разгадано: ${solvedCount} из ${crosswordWords.length}</b></span><span class="tag">Термины системы менеджмента качества</span></div>
+ p.innerHTML=shell('ДОПОЛНИТЕЛЬНОЕ ИСПЫТАНИЕ · 16 СЛОВ','Кроссворд по СМК','Разгадай слова по горизонтали и вертикали. Нажми на определение, чтобы выделить нужное слово.',`
+ <div class="crossword-topline"><span><b>Разгадано: ${solvedCount} из ${crosswordWords.length}</b></span><span class="tag"></span></div>
  <div class="cross-board-wrap"><div class="cross-board" style="grid-template-columns:repeat(${CROSS_COLS},30px)">${grid.join('')}</div></div>
  <div class="crossword-legend"><span><i></i> Выбранное слово</span><span><i class="legend-solved"></i> Разгаданное слово</span></div>
  <div class="cross-clues"><section><h3>По горизонтали</h3><div class="cross-clue-list">${makeClues('A')}</div></section><section><h3>По вертикали</h3><div class="cross-clue-list">${makeClues('D')}</div></section></div>
  <div id="crosswordFeedback">${state.answers.crosswordMessage||''}</div>
  <div class="actionrow"><button class="btn btn-dark" id="checkCrossword">Проверить кроссворд</button></div>
  <div class="progress"><span style="width:${solvedCount/crosswordWords.length*100}%"></span></div>
- <p class="footer-note">Подсказка: сначала выбирай короткие слова — они помогут открыть буквы в пересекающихся ответах. Ответы можно вводить с клавиатуры.</p>`);
+ <p class="footer-note"></p>`);
  const getWord=(key)=>crosswordWords.find(w=>w.key===key);
  function highlightWord(key,focusFirst=false){
   const word=getWord(key);if(!word)return;
