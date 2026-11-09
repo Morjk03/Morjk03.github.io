@@ -468,7 +468,7 @@ function showResult(){
   const quizAnswers=state.answers.quiz||{};
   const quizCorrect=Object.keys(quizAnswers).filter(k=>quizAnswers[k]===questionsForResult[Number(k)]).length;
   const detectiveDone=(state.answers.detectiveCasesDone||[]).length;
-  p.innerHTML=`<div class="result-hero"><div class="medal">✓</div><div class="round-kicker">Операция завершена</div><h2>Качество — это командная работа</h2><p class="lead">Ты прошёл все этапы QUALITY QUEST. Ниже — краткий обзор прохождения.</p></div>
+  p.innerHTML=`<div class="result-hero"><div class="medal">✓</div><div class="round-kicker">Квест завершен</div><h2>Качество — это командная работа</h2><p class="lead">Ты прошёл все этапы QUALITY QUEST. Ниже — краткий обзор прохождения.</p></div>
     <div class="result-grid">
       <div class="result-cell"><strong>${decisionCorrect}/${decisionCases.length}</strong><small>Верных решений</small></div>
       <div class="result-cell"><strong>${bossCorrect}/${bossRounds.length}</strong><small>Успешных атак</small></div>
