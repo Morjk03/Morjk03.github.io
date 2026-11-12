@@ -57,15 +57,20 @@ button,input,textarea{font:inherit}button{cursor:pointer}.shell{max-width:1120px
 <script>
 const $=s=>document.querySelector(s);
 const $$=s=>Array.from(document.querySelectorAll(s));
-const STORAGE_KEY='qualityQuestMain_v1';
+const STORAGE_KEY='qualityQuestMain_v2';
+const PREVIOUS_STORAGE_KEY='qualityQuestMain_v1';
 const freshState=()=>({step:0,done:[false,false,false,false],answers:{},bossIndex:0,decisionIndex:0});
 let state=freshState();
 try{
-  const stored=localStorage.getItem(STORAGE_KEY);
+  const stored=localStorage.getItem(STORAGE_KEY)||localStorage.getItem(PREVIOUS_STORAGE_KEY);
   if(stored){
     const parsed=JSON.parse(stored);
     if(parsed&&Array.isArray(parsed.done)&&parsed.answers&&typeof parsed.answers==='object'){
       state={...freshState(),...parsed};
+      if(!localStorage.getItem(STORAGE_KEY)){
+        state.step=parsed.step===4?3:parsed.step===3?2:parsed.step;
+        state.done=[!!parsed.done[0],!!parsed.done[1],!!parsed.done[2],!!parsed.done[4]];
+      }
     }
   }
 }catch(e){}
@@ -287,9 +292,9 @@ const bossRounds=[
 {attack:'Изменение требований клиента',desc:'Клиент прислал новое требование по отчётности. Менеджер переслал письмо исполнителю, но шаблон, инструкция и критерии приёмки остались прежними. Первый отчёт по новым требованиям уже подготовлен.',tools:[['a','Сначала проверить содержание и применимость нового требования, определить затронутые процессы и документы, согласовать изменения, довести их до исполнителей и проверить первый результат до отправки.'],['b','Отправить отчёт как есть: менеджер уже переслал письмо.'],['c','Поменять шаблон самостоятельно, не уведомляя владельца процесса.'],['d','Сохранить новое требование только в переписке, чтобы не увеличивать количество документов.'],['e','Попросить клиента повторить требование в телефонном разговоре и не фиксировать его.']],right:'a',why:'Изменение требований нужно оценить, перевести в управляемые изменения процесса и документированной информации, довести до исполнителей и проверить результат до передачи клиенту.'},
 {attack:'Улучшение не прижилось',desc:'После изменения процесса время выполнения сократилось. Через месяц часть команды вернулась к старой схеме: новая инструкция неудобна, права доступа настроены не всем, а показатель скорости не учитывает количество возвратов на доработку.',tools:[['a','Выпустить приказ о запрете старого способа и считать внедрение завершённым.'],['b','Сохранить новую схему, но не менять доступы и обучение — сотрудники привыкнут.'],['c','Вернуть старый процесс, поскольку он привычнее.'],['d','Оценить причины отката, устранить барьеры внедрения, обучить пользователей, обновить доступы и критерии результата; затем проверить скорость вместе с качеством результата.'],['e','Оценивать улучшение только по средней скорости выполнения.']],right:'d',why:'Улучшение должно быть применимым и устойчивым. Нужно устранить причины возврата к старому процессу и оценивать не только скорость, но и качество результата, например возвраты и ошибки.'}
 ];
-function renderBoss(p){const i=state.bossIndex;const r=bossRounds[i];const saved=state.answers.bossChoices||{};p.innerHTML=shell('Уровень 03 · Босс-файт','Победи бюрократию',`У бюрократии ${bossRounds.length} атак. Подбирай правильный инструмент качества для каждой атаки.`,`
+function renderBoss(p){if(Object.keys(state.answers.bossChoices||{}).length===bossRounds.length){renderBossFinal(p);return;}const i=state.bossIndex;const r=bossRounds[i];const saved=state.answers.bossChoices||{};p.innerHTML=shell('Уровень 03 · Босс-файт','Победи бюрократию',`У бюрократии ${bossRounds.length} атак. Подбирай правильный инструмент качества для каждой атаки.`,`
 <div class="boss"><div class="bossname">ФИНАЛЬНЫЙ ПРОТИВНИК · УРОВЕНЬ ${i+1}/${bossRounds.length}</div><h3>👾 ${r.attack}</h3><p>${r.desc}</p><div class="health"><span style="width:${100-(state.answers.bossCorrect||0)/bossRounds.length*100}%"></span></div></div><div class="choice-list" id="bossChoices">${r.tools.map(([v,t])=>`<button class="choice" data-choice="${v}" ${saved[i]?'disabled':''}><span class="radio-dot"></span><span>${t}</span></button>`).join('')}</div><div id="bossFeedback">${state.answers['bossFeedback'+i]||''}</div><div class="actionrow"><button class="btn btn-dark" id="hitBoss" ${saved[i]?'disabled':''}>Нанести удар</button>${saved[i]?`<button class="btn btn-primary" id="bossNext">${i===bossRounds.length-1?'Завершить битву':'Следующая атака →'}</button>`:''}</div><p class="footer-note"></p>`);
-let chosen=saved[i];$$('#bossChoices .choice').forEach(b=>{if(b.dataset.choice===chosen)b.classList.add('selected');b.addEventListener('click',()=>{if(saved[i])return;chosen=b.dataset.choice;$$('#bossChoices .choice').forEach(x=>x.classList.toggle('selected',x===b))})});$('#hitBoss')?.addEventListener('click',()=>{if(!chosen){toast('Выбери инструмент');return}state.answers.bossChoices=state.answers.bossChoices||{};state.answers.bossChoices[i]=chosen;const ok=chosen===r.right;if(ok){state.answers.bossCorrect=(state.answers.bossCorrect||0)+1}state.answers['bossFeedback'+i]=`<div class="feedback ${ok?'good':'bad'}"><b>${ok?'Отличный ход!':'Бюрократия пока устояла.'}</b><br>${r.why}</div>`;if(i===bossRounds.length-1){finishStep(2)}saveProgress();renderBoss($('#panel'));updateStats()});$('#bossNext')?.addEventListener('click',()=>{if(i<bossRounds.length-1){state.bossIndex++;saveProgress();renderBoss($('#panel'))}else{state.bossIndex=0;nav(3)}})}
+let chosen=saved[i];$$('#bossChoices .choice').forEach(b=>{if(b.dataset.choice===chosen)b.classList.add('selected');b.addEventListener('click',()=>{if(saved[i])return;chosen=b.dataset.choice;$$('#bossChoices .choice').forEach(x=>x.classList.toggle('selected',x===b))})});$('#hitBoss')?.addEventListener('click',()=>{if(!chosen){toast('Выбери инструмент');return}state.answers.bossChoices=state.answers.bossChoices||{};state.answers.bossChoices[i]=chosen;const ok=chosen===r.right;if(ok){state.answers.bossCorrect=(state.answers.bossCorrect||0)+1}state.answers['bossFeedback'+i]=`<div class="feedback ${ok?'good':'bad'}"><b>${ok?'Отличный ход!':'Бюрократия пока устояла.'}</b><br>${r.why}</div>`;if(i===bossRounds.length-1){finishStep(2)}saveProgress();renderBoss($('#panel'));updateStats()});$('#bossNext')?.addEventListener('click',()=>{if(i<bossRounds.length-1){state.bossIndex++;saveProgress();renderBoss($('#panel'))}else{state.bossIndex=0;renderBossFinal($('#panel'));updateStats()}})}
 /* Дополнительная игра: сеточный кроссворд по простым понятиям СМК. */
 const crosswordWords=[
  {key:'1A',number:1,row:1,col:17,dir:'A',answer:'ПЛАН',clue:'Заранее составленный порядок действий, который помогает прийти к нужному результату.'},
@@ -398,6 +403,34 @@ function renderCrossword(p){
   else{state.answers.crosswordMessage=`<div class="feedback info"><b>Разгадано ${count} из ${crosswordWords.length} слов.</b><br>Верные слова отмечены. Продолжай заполнять пересекающиеся клетки.</div>`;}
   saveProgress();renderCrossword(p);updateStats();
  });
+}
+
+function renderBossFinal(p){
+ const detective=(state.answers.detectiveCasesDone||[]).length;
+ const decisions=state.answers.decisionChoices||{};
+ const decisionCount=Object.keys(decisions).length;
+ const decisionCorrect=decisionCases.filter((q,i)=>decisions[i]===q.right).length;
+ const bosses=state.answers.bossChoices||{};
+ const bossCount=Object.keys(bosses).length;
+ const bossCorrect=bossRounds.filter((q,i)=>bosses[i]===q.right).length;
+ const completed=detective===detectiveCases.length&&decisionCount===decisionCases.length&&bossCount===bossRounds.length;
+ 
+ p.innerHTML=`<div class="result-hero">
+   <div class="medal">✓</div>
+   <div class="round-kicker">${completed?'КВЕСТ ЗАВЕРШЁН':'ПРОМЕЖУТОЧНЫЕ ИТОГИ'}</div>
+   <h2>Качество — это командная работа</h2>
+   <p class="lead">${completed?'Ты прошёл три основных этапа QUALITY QUEST. Ниже — краткий обзор прохождения.':'Здесь будут результаты трёх основных этапов. Заверши оставшиеся задания, чтобы подвести итоги.'}</p>
+ </div>
+ <div class="result-grid">
+   <div class="result-cell"><strong>${detective}/${detectiveCases.length}</strong><small>Раскрытых досье</small></div>
+   <div class="result-cell"><strong>${decisionCorrect}/${decisionCases.length}</strong><small>Верных решений</small></div>
+   <div class="result-cell"><strong>${bossCorrect}/${bossRounds.length}</strong><small>Успешных атак</small></div>
+ </div>
+ ${completed?'<div class="feedback good">Главный вывод: качество — это не только стандарты и проверки. Это достоверные данные, понятные процессы, своевременная коммуникация, распределённая ответственность и предупреждение повторных ошибок.</div>':`<div class="feedback info">Пройдено: ${detective} из ${detectiveCases.length} досье, ${decisionCount} из ${decisionCases.length} ситуаций и ${bossCount} из ${bossRounds.length} атак.</div>`}
+ <div class="actionrow" style="justify-content:center">${completed?'<button type="button" class="btn btn-primary" id="summaryNext">Перейти к кроссворду →</button>':'<button type="button" class="btn btn-dark" id="summaryBack">Вернуться к заданиям</button>'}</div>
+ <p class="footer-note" style="text-align:center">Прогресс сохраняется в этом браузере.</p>`;
+ $('#summaryNext')?.addEventListener('click',()=>nav(3));
+ $('#summaryBack')?.addEventListener('click',()=>nav(detective<3?0:decisionCount<9?1:2));
 }
 
 function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
